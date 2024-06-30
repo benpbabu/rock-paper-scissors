@@ -1,6 +1,4 @@
 import random
-import logging
-from tkinter import Tk, Label, Button, Entry
 
 
 class RPSBackBone:
