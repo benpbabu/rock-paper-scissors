@@ -1,5 +1,6 @@
 import logging
 import time
+from PIL import ImageTk, Image
 import ttkbootstrap as tb
 from ttkbootstrap.constants import *
 from backbone import RPSBackBone
@@ -12,36 +13,55 @@ class RockPaperScissorsApp:
         """Create root window and place widgets"""
         self.root_window = tb.Window(themename="lumen")
         self.set_root_window_parameters()
+        self.load_images()
         self.create_widgets()
         self.place_widgets()
         self.rock_paper_scissors = RPSBackBone()
 
+    def load_images(self):
+        self.failed = ImageTk.PhotoImage(Image.open("images/failed.png"))
+        self.paper = ImageTk.PhotoImage(Image.open("images/paper.png"))
+        self.rock = ImageTk.PhotoImage(Image.open("images/rock.png"))
+        self.scissors = ImageTk.PhotoImage(Image.open("images/scissors.png"))
+        self.tied = ImageTk.PhotoImage(Image.open("images/tied.png"))
+        self.won = ImageTk.PhotoImage(Image.open("images/won.png"))
+        self.images = {
+            "Won": self.won,
+            "Failed": self.failed,
+            "Tied": self.tied,
+            "Rock": self.rock,
+            "Paper": self.paper,
+            "Scissors": self.scissors,
+        }
+
     def set_root_window_parameters(self) -> None:
         self.root_window.title("Rock Paper Scissors")
         # self.root_window.iconbitmap("./images/icon.ico")
-        self.root_window.geometry("640x200")
+        self.root_window.geometry("800x540")
 
     def create_widgets(self) -> None:
         """Function to create widgets in root window"""
         self.computer_label = tb.Label(
             self.root_window,
             text="Computer's choice",
+            justify="center",
             bootstyle="default",
         )
         self.human_label = tb.Label(
             self.root_window,
             text="Your choice",
+            justify="center",
             bootstyle="default",
         )
         self.computer_choice_label = tb.Label(
-            self.root_window, text="Rock", bootstyle="default"
+            self.root_window, image=self.rock, bootstyle="default"
         )
         self.human_choice_label = tb.Label(
-            self.root_window, text="Rock", bootstyle="default"
+            self.root_window, image=self.rock, bootstyle="default"
         )
         self.outcome_label = tb.Label(
             self.root_window,
-            text="Let's play",
+            image=self.tied,
             bootstyle="default",
         )
         self.rock_button = tb.Button(
@@ -70,20 +90,20 @@ class RockPaperScissorsApp:
         """Function to place widgets in grid layout"""
         label_width1 = 33
         button_width1 = 20
-        self.computer_label.grid(row=0, column=0, padx=10, pady=10, sticky="we")
+        self.computer_label.grid(row=0, column=0, padx=30, pady=10)
         self.computer_label.configure(width=label_width1)
         self.human_label.grid(row=0, column=2)
         self.human_label.configure(width=label_width1)
         self.computer_choice_label.grid(row=1, column=0)
         self.human_choice_label.grid(row=1, column=2)
-        self.outcome_label.grid(row=2, column=1)
-        self.rock_button.grid(row=3, column=0)
+        self.outcome_label.grid(row=1, column=1)
+        self.rock_button.grid(row=3, column=2, pady=10)
         self.rock_button.configure(width=button_width1)
-        self.paper_button.grid(row=3, column=1)
+        self.paper_button.grid(row=4, column=2, pady=10)
         self.paper_button.configure(width=button_width1)
-        self.scissors_button.grid(row=3, column=2, pady=10)
+        self.scissors_button.grid(row=5, column=2, pady=10)
         self.scissors_button.configure(width=button_width1)
-        self.exit_button.grid(row=4, column=2)
+        self.exit_button.grid(row=6, column=2, pady=20)
         self.exit_button.configure(width=10)
 
     def user_plays(self, user_choice: str) -> None:
@@ -91,10 +111,9 @@ class RockPaperScissorsApp:
         self.rock_paper_scissors.choose_for_computer()
         self.rock_paper_scissors.human_chooses(user_choice)
         result, c_choice, h_choice = self.rock_paper_scissors.result()
-        outcome = f"You {result}"
-        self.computer_choice_label.configure(text=c_choice)
-        self.human_choice_label.configure(text=h_choice)
-        self.outcome_label.configure(text=outcome)
+        self.computer_choice_label.configure(image=self.images[c_choice])
+        self.human_choice_label.configure(image=self.images[h_choice])
+        self.outcome_label.configure(image=self.images[result])
 
     def run(self) -> None:
         self.root_window.mainloop()
