@@ -44,12 +44,14 @@ class RockPaperScissorsApp:
         self.computer_label = tb.Label(
             self.root_window,
             text="Computer's choice",
+            font=("helvetica", 14),
             justify="center",
             bootstyle="default",
         )
         self.human_label = tb.Label(
             self.root_window,
             text="Your choice",
+            font=("helvetica", 14),
             justify="center",
             bootstyle="default",
         )
@@ -86,25 +88,52 @@ class RockPaperScissorsApp:
             self.root_window, text="Exit", command=self.close, bootstyle="danger"
         )
 
+    # def place_widgets(self) -> None:
+    #     """Function to place widgets in grid layout"""
+    #     label_width1 = 33
+    #     button_width1 = 20
+    #     self.computer_label.grid(row=0, column=0, padx=30, pady=10)
+    #     self.computer_label.configure(width=label_width1)
+    #     self.human_label.grid(row=0, column=2)
+    #     self.human_label.configure(width=label_width1)
+    #     self.computer_choice_label.grid(row=1, column=0)
+    #     self.human_choice_label.grid(row=1, column=2)
+    #     self.outcome_label.grid(row=1, column=1)
+    #     self.rock_button.grid(row=3, column=2, pady=10)
+    #     self.rock_button.configure(width=button_width1)
+    #     self.paper_button.grid(row=4, column=2, pady=10)
+    #     self.paper_button.configure(width=button_width1)
+    #     self.scissors_button.grid(row=5, column=2, pady=10)
+    #     self.scissors_button.configure(width=button_width1)
+    #     self.exit_button.grid(row=6, column=2, pady=20)
+    #     self.exit_button.configure(width=10)
+
     def place_widgets(self) -> None:
         """Function to place widgets in grid layout"""
-        label_width1 = 33
-        button_width1 = 20
-        self.computer_label.grid(row=0, column=0, padx=30, pady=10)
-        self.computer_label.configure(width=label_width1)
-        self.human_label.grid(row=0, column=2)
-        self.human_label.configure(width=label_width1)
-        self.computer_choice_label.grid(row=1, column=0)
-        self.human_choice_label.grid(row=1, column=2)
-        self.outcome_label.grid(row=1, column=1)
-        self.rock_button.grid(row=3, column=2, pady=10)
-        self.rock_button.configure(width=button_width1)
-        self.paper_button.grid(row=4, column=2, pady=10)
-        self.paper_button.configure(width=button_width1)
-        self.scissors_button.grid(row=5, column=2, pady=10)
-        self.scissors_button.configure(width=button_width1)
-        self.exit_button.grid(row=6, column=2, pady=20)
-        self.exit_button.configure(width=10)
+        # label_width1 = 100
+        button_width1 = 150
+        button_width2 = 120
+        self.computer_label.place(relx=0.2, rely=0.03, anchor="center")
+        self.human_label.place(relx=0.8, rely=0.03, anchor="center")
+        self.computer_choice_label.place(relx=0.2, rely=0.3, anchor="center")
+        self.human_choice_label.place(relx=0.83, rely=0.3, anchor="center")
+        self.outcome_label.place(relx=0.5, rely=0.3, anchor="center")
+        self.rock_button.place(
+            relx=0.83, rely=0.6, anchor="center", width=button_width1
+        )
+        # self.rock_button.configure(width=button_width1)
+        self.paper_button.place(
+            relx=0.83, rely=0.7, anchor="center", width=button_width1
+        )
+        # self.paper_button.configure(width=button_width1)
+        self.scissors_button.place(
+            relx=0.83, rely=0.8, anchor="center", width=button_width1
+        )
+        # self.scissors_button.configure(width=button_width1)
+        self.exit_button.place(
+            relx=0.83, rely=0.9, anchor="center", width=button_width2
+        )
+        # self.exit_button.configure(width=10)
 
     def user_plays(self, user_choice: str) -> None:
         """Callback function when user clicks a tb.Button (Rock/Paper/Scissors)"""
